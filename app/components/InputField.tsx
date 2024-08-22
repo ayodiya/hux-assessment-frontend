@@ -22,6 +22,7 @@ const InputField: React.FC<InputFieldProps> = ({
   return (
     <Box>
       <TextField
+        autoComplete="new-password"
         name={name}
         error={Boolean(error)}
         fullWidth
