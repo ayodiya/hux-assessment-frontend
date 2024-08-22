@@ -10,7 +10,11 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import HomeIcon from "@mui/icons-material/Home";
 import ContactsIcon from "@mui/icons-material/Contacts";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+import LoginIcon from "@mui/icons-material/Login";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const navItems = [
   {
@@ -23,9 +27,25 @@ const navItems = [
     link: "#",
     icon: <ContactsIcon />,
   },
+  {
+    linkText: "SIGN UP",
+    link: "/sign-up",
+    icon: <HowToRegIcon />,
+  },
+  {
+    linkText: "SIGN IN",
+    link: "#",
+    icon: <LoginIcon />,
+  },
+  {
+    linkText: "LOGOUT",
+    link: "#",
+    icon: <LogoutIcon />,
+  },
 ];
 
 export default function NavDrawer() {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = () => {
@@ -37,10 +57,10 @@ export default function NavDrawer() {
       <List>
         {navItems.map(({ linkText, link, icon }) => (
           <ListItem key={linkText} disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => router.push(link)}>
               <ListItemIcon
                 sx={{
-                  color: "black",
+                  color: "white",
                 }}
               >
                 {icon}
