@@ -34,7 +34,7 @@ const navItems = [
   },
   {
     linkText: "SIGN IN",
-    link: "#",
+    link: "/sign-in",
     icon: <LoginIcon />,
   },
   {
