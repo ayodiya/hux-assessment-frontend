@@ -2,7 +2,7 @@ import React from "react";
 import Button from "@mui/material/Button"; // Import Button instead of Box
 
 interface ButtonProps {
-  backgroundColor: string;
+  backgroundColor?: string;
   text: string;
   onChange?: React.MouseEventHandler<HTMLButtonElement>; // Type for onClick
 }

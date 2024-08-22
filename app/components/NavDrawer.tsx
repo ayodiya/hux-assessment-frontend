@@ -23,8 +23,8 @@ const navItems = [
     icon: <HomeIcon />,
   },
   {
-    linkText: "CONTACT",
-    link: "#",
+    linkText: "CONTACTS",
+    link: "/contacts",
     icon: <ContactsIcon />,
   },
   {
@@ -34,7 +34,7 @@ const navItems = [
   },
   {
     linkText: "SIGN IN",
-    link: "#",
+    link: "/sign-in",
     icon: <LoginIcon />,
   },
   {
