@@ -24,7 +24,7 @@ const navItems = [
   },
   {
     linkText: "CONTACT",
-    link: "#",
+    link: "/contacts",
     icon: <ContactsIcon />,
   },
   {
