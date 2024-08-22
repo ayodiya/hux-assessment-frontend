@@ -2,10 +2,10 @@
 
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
 import { Formik } from "formik";
 
 import InputField from "../components/InputField";
+import ButtonCom from "../components/ButtonCom";
 
 import signUpValidator, {
   FIRST_NAME,
@@ -124,16 +124,7 @@ export default function SignUp() {
                     justifyContent: "center",
                   }}
                 >
-                  <Button
-                    sx={{
-                      backgroundColor: "#34a853",
-                      color: "white",
-                    }}
-                    disableElevation
-                    variant="contained"
-                  >
-                    Submit
-                  </Button>
+                  <ButtonCom backgroundColor="#34a853" text="Submit" />
                 </Box>
               </Stack>
             </Box>
