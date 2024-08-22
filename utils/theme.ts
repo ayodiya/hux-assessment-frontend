@@ -12,6 +12,14 @@ const theme = createTheme({
   typography: {
     fontFamily: openSans.style.fontFamily,
   },
+  palette: {
+    primary: {
+      main: "#ffff",
+    },
+    secondary: {
+      main: "#000",
+    },
+  },
 });
 
 export default theme;
