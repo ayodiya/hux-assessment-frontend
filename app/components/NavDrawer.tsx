@@ -23,7 +23,7 @@ const navItems = [
     icon: <HomeIcon />,
   },
   {
-    linkText: "CONTACT",
+    linkText: "CONTACTS",
     link: "/contacts",
     icon: <ContactsIcon />,
   },
