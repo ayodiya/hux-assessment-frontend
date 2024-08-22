@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
-import { ThemeProvider } from '@mui/material/styles';
-import {Box} from '@mui/material'
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import { ThemeProvider } from "@mui/material/styles";
+import { Box } from "@mui/material";
 
-import theme from '../utils/theme'
+import theme from "../utils/theme";
 import "./globals.css";
-
-
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,14 +19,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-      <Box sx={{ fontFamily: 'Open Sans' }}>
-      <AppRouterCacheProvider>
-      <ThemeProvider theme={theme}> 
-        {children}
-        </ThemeProvider>
-        </AppRouterCacheProvider>
+        <Box sx={{ fontFamily: "Open Sans" }}>
+          <AppRouterCacheProvider>
+            <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          </AppRouterCacheProvider>
         </Box>
-        </body>
+      </body>
     </html>
   );
 }
