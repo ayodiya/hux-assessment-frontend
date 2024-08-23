@@ -63,7 +63,7 @@ export default function ContactList() {
         }}
       >
         <ButtonCom
-          onChange={() => router.push("/contacts/add-contact")}
+          onClick={() => router.push("/contacts/add-contact")}
           text="Add Contact"
           backgroundColor="#34a853"
         />

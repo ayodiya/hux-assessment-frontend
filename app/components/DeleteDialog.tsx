@@ -31,13 +31,13 @@ export default function DeleteDialog({
         </DialogContent>
         <DialogActions>
           <ButtonCom
-            onChange={handleDeleteDialog}
+            onClick={handleDeleteDialog}
             backgroundColor="#ffb400"
             text="Cancel"
           />
           <ButtonCom
             backgroundColor="#e74c3c"
-            onChange={handleDeleteDialog}
+            onClick={handleDeleteDialog}
             text="Delete"
           />
         </DialogActions>

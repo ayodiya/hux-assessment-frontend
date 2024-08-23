@@ -69,12 +69,12 @@ export default function ContactCard({ contactDetails }: ContactCardProps) {
           </CardContent>
           <CardActions>
             <ButtonCom
-              onChange={() => router.push("/contacts/edit-contact")}
+              onClick={() => router.push("/contacts/edit-contact")}
               backgroundColor="#ffb400"
               text="Edit"
             />
             <ButtonCom
-              onChange={handleDeleteDialog}
+              onClick={handleDeleteDialog}
               backgroundColor="#e74c3c"
               text="Delete"
             />
