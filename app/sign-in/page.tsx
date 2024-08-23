@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
+import Link from "next/link";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { Formik } from "formik";
 import { useRouter } from "next/navigation";
@@ -127,6 +128,17 @@ export default function SignUp() {
                     text={isSubmitting ? <CircularProgress /> : "Submit"}
                   />
                 </Box>
+                <Link href="/sign-up">
+                  <Box
+                    sx={{
+                      paddingTop: "30px",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    Not registered? SIGN UP
+                  </Box>
+                </Link>
               </Stack>
             </Box>
           )}
