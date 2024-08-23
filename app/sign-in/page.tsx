@@ -2,7 +2,12 @@
 
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import CircularProgress from "@mui/material/CircularProgress";
+import axios from "axios";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { Formik } from "formik";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 import InputField from "../components/InputField";
 import ButtonCom from "../components/ButtonCom";
@@ -20,6 +25,14 @@ const initialValues = {
 };
 
 export default function SignUp() {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (localStorage.getItem("contactAppToken") !== null) {
+      router.push("/contacts");
+    }
+  }, [router]);
+
   return (
     <Box sx={{ color: "white" }}>
       <Box
@@ -42,8 +55,28 @@ export default function SignUp() {
         <Formik
           initialValues={initialValues}
           validationSchema={signInValidator}
-          onSubmit={async (values) => {
-            console.log("this is testing", values);
+          onSubmit={async (values, { resetForm }) => {
+            try {
+              const { data } = await axios.post(
+                `${process.env.NEXT_PUBLIC_TEST_URL}/auth/login`,
+                { ...values },
+                {
+                  headers: {
+                    "Content-Type": "application/json", // Set the content type header
+                  },
+                },
+              );
+
+              Notify.success(data.message);
+              localStorage.setItem("contactAppToken", data.token);
+              localStorage.setItem(
+                "contactAppUserDetails",
+                JSON.stringify(data.userDetails),
+              );
+              router.push("/contacts");
+            } catch (error: any) {
+              Notify.failure(error.response.data.msg);
+            }
           }}
         >
           {({
@@ -88,7 +121,11 @@ export default function SignUp() {
                     justifyContent: "center",
                   }}
                 >
-                  <ButtonCom backgroundColor="#34a853" text="Submit" />
+                  <ButtonCom
+                    type="submit"
+                    backgroundColor="#34a853"
+                    text={isSubmitting ? <CircularProgress /> : "Submit"}
+                  />
                 </Box>
               </Stack>
             </Box>
