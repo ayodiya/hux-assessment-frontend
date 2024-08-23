@@ -2,7 +2,11 @@
 
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
+import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { Formik } from "formik";
+import { useRouter } from "next/navigation";
 
 import InputField from "@/app/components/InputField";
 import ButtonCom from "@/app/components/ButtonCom";
@@ -25,7 +29,9 @@ const initialValues = {
   [EMAIL]: "",
 };
 
-export default function addContact() {
+export default function AddContact() {
+  const router = useRouter();
+
   return (
     <Box sx={{ color: "white" }}>
       <Box
@@ -48,8 +54,28 @@ export default function addContact() {
         <Formik
           initialValues={initialValues}
           validationSchema={addContactValidator}
-          onSubmit={async (values) => {
-            console.log("this is testing", values);
+          onSubmit={async (values, { resetForm }) => {
+            try {
+              const { data } = await axios.post(
+                `${process.env.NEXT_PUBLIC_TEST_URL}/contact/add`,
+                { ...values },
+                {
+                  headers: {
+                    "Content-Type": "application/json", // Set the content type header
+                    Authorization: `Bearer ${localStorage.getItem("contactAppToken")}`,
+                  },
+                },
+              );
+
+              Notify.success(data.message);
+              router.push("/contacts");
+            } catch (error: any) {
+              if (error.response.data.errors.length > 0) {
+                Notify.failure(JSON.stringify(error.response.data.errors[0]));
+              }
+              Notify.failure(error.response.data.msg);
+            }
+            resetForm();
           }}
         >
           {({
@@ -111,7 +137,12 @@ export default function addContact() {
                     justifyContent: "center",
                   }}
                 >
-                  <ButtonCom backgroundColor="#34a853" text="Submit" />
+                  <ButtonCom
+                    disabled={isSubmitting}
+                    type="submit"
+                    backgroundColor="#34a853"
+                    text={isSubmitting ? <CircularProgress /> : "Submit"}
+                  />
                 </Box>
               </Stack>
             </Box>

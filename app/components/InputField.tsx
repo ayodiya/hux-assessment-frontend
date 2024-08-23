@@ -9,6 +9,7 @@ interface InputFieldProps {
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   label: string;
   type?: string;
+  value?: string;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -17,11 +18,13 @@ const InputField: React.FC<InputFieldProps> = ({
   onBlur,
   onChange,
   label,
+  value,
   ...props
 }) => {
   return (
     <Box>
       <TextField
+        value={value}
         autoComplete="new-password"
         name={name}
         error={Boolean(error)}

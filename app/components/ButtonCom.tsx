@@ -1,26 +1,30 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import Button from "@mui/material/Button"; // Import Button instead of Box
 
 interface ButtonProps {
   backgroundColor?: string;
-  text: string;
-  onChange?: React.MouseEventHandler<HTMLButtonElement>; // Type for onClick
+  text: string | ReactNode;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>; // Type for onClick
+  type?: "button" | "reset" | "submit";
+  disabled?: boolean;
 }
 
 const ButtonCom: React.FC<ButtonProps> = ({
   backgroundColor,
   text,
-  onChange,
+  onClick,
+  type,
 }) => {
   return (
     <Button
+      type={type}
       sx={{
         backgroundColor: backgroundColor,
         color: "white",
       }}
       disableElevation
       variant="contained"
-      onClick={onChange}
+      onClick={onClick}
     >
       {text}
     </Button>

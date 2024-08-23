@@ -1,33 +1,63 @@
+"use client";
+
 import Box from "@mui/material/Box";
 import Avatar from "@mui/material/Avatar";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
+import axios from "axios";
+import CircularProgress from "@mui/material/CircularProgress";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import ButtonCom from "./ButtonCom";
-import DeleteDialog from "./DeleteDialog";
 
 // Define the interface for the props
 interface ContactDetails {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   phoneNo: string;
+  slug: string;
 }
 
 // Define the props type for the ContactCard component
 interface ContactCardProps {
   contactDetails: ContactDetails;
+  getContacts: () => Promise<void>;
 }
 
-export default function ContactCard({ contactDetails }: ContactCardProps) {
+export default function ContactCard({
+  contactDetails,
+  getContacts,
+}: ContactCardProps) {
   const router = useRouter();
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleDeleteDialog = () => {
-    setOpenDeleteDialog(!openDeleteDialog);
+  const deleteContact = async (slug: string) => {
+    setLoading(true);
+
+    try {
+      const { data } = await axios.delete(
+        `${process.env.NEXT_PUBLIC_TEST_URL}/contact/${slug}`,
+        {
+          headers: {
+            "Content-Type": "application/json", // Set the content type header
+            Authorization: `Bearer ${localStorage.getItem("contactAppToken")}`,
+          },
+        },
+      );
+
+      await getContacts();
+      Notify.success(data.message);
+      router.push("/contacts");
+    } catch (error: any) {
+      Notify.failure(error.response.data.msg);
+    }
+
+    setLoading(false);
   };
 
   return (
@@ -53,7 +83,7 @@ export default function ContactCard({ contactDetails }: ContactCardProps) {
               }}
             >
               <Avatar sx={{ width: 56, height: 56 }}>
-                {contactDetails?.name?.charAt(0)}
+                {contactDetails?.firstName?.charAt(0).toLocaleUpperCase()}
               </Avatar>
             </Box>
             <Stack
@@ -62,29 +92,30 @@ export default function ContactCard({ contactDetails }: ContactCardProps) {
               alignItems="center"
               spacing={2}
             >
-              <Box>{contactDetails?.name}</Box>
+              <Box>
+                {contactDetails?.firstName} {contactDetails?.lastName}
+              </Box>
               <Box>{contactDetails?.email}</Box>
               <Box>{contactDetails?.phoneNo}</Box>
             </Stack>
           </CardContent>
           <CardActions>
             <ButtonCom
-              onChange={() => router.push("/contacts/edit-contact")}
+              onClick={() =>
+                router.push(`/contacts/edit-contact/${contactDetails?.slug}`)
+              }
               backgroundColor="#ffb400"
               text="Edit"
             />
             <ButtonCom
-              onChange={handleDeleteDialog}
+              disabled={loading}
+              onClick={() => deleteContact(contactDetails?.slug)}
               backgroundColor="#e74c3c"
-              text="Delete"
+              text={loading ? <CircularProgress /> : "Delete"}
             />
           </CardActions>
         </Card>
       </Box>
-      <DeleteDialog
-        handleDeleteDialog={handleDeleteDialog}
-        openDeleteDialog={openDeleteDialog}
-      />
     </>
   );
 }
