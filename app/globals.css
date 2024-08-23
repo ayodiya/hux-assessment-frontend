@@ -8,6 +8,7 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  background-color: #49c5b6;
 }
 
 a {
