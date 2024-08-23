@@ -1,11 +1,12 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import Button from "@mui/material/Button"; // Import Button instead of Box
 
 interface ButtonProps {
   backgroundColor?: string;
-  text: string;
+  text: string | ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>; // Type for onClick
   type?: "button" | "reset" | "submit";
+  disabled?: boolean;
 }
 
 const ButtonCom: React.FC<ButtonProps> = ({
