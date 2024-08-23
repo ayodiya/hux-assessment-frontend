@@ -2400,6 +2400,11 @@ next@14.2.6:
     "@next/swc-win32-ia32-msvc" "14.2.6"
     "@next/swc-win32-x64-msvc" "14.2.6"
 
+notiflix@^3.2.7:
+  version "3.2.7"
+  resolved "https://registry.yarnpkg.com/notiflix/-/notiflix-3.2.7.tgz#a271f9a2f40eef3c088c9aab79515f80731d0d6f"
+  integrity sha512-NRu6KSeyfphgPKBxh4IUoOYXbROrpuDa9/q9/VPb6UNEP4uII9RKwclTZWUyl1A0tSh9+lEhdz9F/EkskH3A6w==
+
 object-assign@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
