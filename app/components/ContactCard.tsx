@@ -4,6 +4,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import Stack from "@mui/material/Stack";
+import { useRouter } from "next/navigation";
 
 import ButtonCom from "./ButtonCom";
 
@@ -20,6 +21,8 @@ interface ContactCardProps {
 }
 
 export default function ContactCard({ contactDetails }: ContactCardProps) {
+  const router = useRouter();
+
   return (
     <Box
       sx={{
@@ -57,7 +60,11 @@ export default function ContactCard({ contactDetails }: ContactCardProps) {
           </Stack>
         </CardContent>
         <CardActions>
-          <ButtonCom backgroundColor="#ffb400" text="Edit" />
+          <ButtonCom
+            onChange={() => router.push("/contacts/edit-contact")}
+            backgroundColor="#ffb400"
+            text="Edit"
+          />
           <ButtonCom backgroundColor="#e74c3c" text="Delete" />
         </CardActions>
       </Card>
