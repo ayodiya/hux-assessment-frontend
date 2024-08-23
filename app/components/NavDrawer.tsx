@@ -13,13 +13,15 @@ import ContactsIcon from "@mui/icons-material/Contacts";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
+import axios from "axios";
+import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const navItems = [
   {
     linkText: "HOME",
-    link: "#",
+    link: "/",
     icon: <HomeIcon />,
   },
   {
@@ -52,12 +54,51 @@ export default function NavDrawer() {
     setOpen(!open);
   };
 
+  const logout = async () => {
+    try {
+      const { data } = await axios.delete(
+        `${process.env.NEXT_PUBLIC_TEST_URL}/auth/logout`,
+        {
+          headers: {
+            "Content-Type": "application/json", // Set the content type header
+            Authorization: `Bearer ${localStorage.getItem("contactAppToken")}`,
+          },
+        },
+      );
+
+      Notify.success(data.message);
+      localStorage.removeItem("contactAppToken");
+      localStorage.removeItem("contactAppUserDetails");
+      router.push("/");
+    } catch (error: any) {
+      Notify.failure(error.response.data.msg);
+    }
+  };
+
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer}>
       <List>
         {navItems.map(({ linkText, link, icon }) => (
-          <ListItem key={linkText} disablePadding>
-            <ListItemButton onClick={() => router.push(link)}>
+          <ListItem
+            sx={{
+              display:
+                localStorage.getItem("contactAppToken") !== null &&
+                (linkText === "SIGN IN" || linkText === "SIGN UP")
+                  ? "none"
+                  : "flex",
+            }}
+            key={linkText}
+            disablePadding
+          >
+            <ListItemButton
+              onClick={() => {
+                if (linkText === "LOGOUT") {
+                  logout();
+                } else {
+                  router.push(link);
+                }
+              }}
+            >
               <ListItemIcon
                 sx={{
                   color: "white",
